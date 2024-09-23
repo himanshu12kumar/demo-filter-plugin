@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Multi-Select Dropdown</title>
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/himanshu12kumar/ajax-multiselect-drop-down-filter@vv1.0.0/drop-downmanager.min.css"> -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body style="display: flex;">
+
+    <div id="process">
+        <!-- Dropdowns will be dynamically inserted here -->
+    </div>
+    <div id="agent">
+        <!-- Dropdowns will be dynamically inserted here -->
+    </div>
+
+    <div id="list">
+        <!-- Dropdowns will be dynamically inserted here -->
+    </div>
+
+    <div id="dispo">
+        <!-- Dropdowns will be dynamically inserted here -->
+    </div>
+
+    <div id="subdispo">
+        <!-- Dropdowns will be dynamically inserted here -->
+    </div>
+
+    <div id="subsubdispo">
+        <!-- Dropdowns will be dynamically inserted here -->
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        // Usage example
+       
+        const process = {
+                process: {
+                    '101': { name: 'Process 1'},
+                    '102': { name: 'Process 2'},
+                    '103': { name: 'Process 3'},
+                    '104': { name: 'Process 4'},
+                    '105': { name: 'Process 5'}
+                }
+            };
+
+            const process_agent = {
+                agent: {
+                    'a_1': { name: 'Himanshu', process: ['101', '102'] },
+                    'a_2': { name: 'Neeraj', process: ['105', '103'] },
+                    'a_8': { name: 'Agent3', process: ['101', '104'] },
+                    'a_4': { name: 'Ajay', process: ['102'] },
+                    'a_5': { name: 'Nikhil', process: ['102', '103'] }
+                }
+            };
+
+
+            const process_list = {
+                list: {
+                    'l_1': { name: 'list 1', process: ['101', '102'] },
+                    'l_2': { name: 'list 2', process: ['106', '107'] },
+                    'l_3': { name: 'list 3', process: ['101', '108'] },
+                    'l_4': { name: 'list 4', process: ['107','101'] },
+                    'l_5': { name: 'list 5', process: ['102', '108','101'] }
+                }
+            };
+
+            const process_dispo = {
+                dispo: {
+                    'd_1': { name: 'dispo 1', process: ['101', '102'] },
+                    'd_2': { name: 'dispo 2', process: ['106', '107'] },
+                    'd_3': { name: 'dispo 3', process: ['101', '108'] },
+                    'd_4': { name: 'dispo 4', process: ['107'] },
+                    'd_5': { name: 'dispo 5', process: ['102', '108'] }
+                }
+            };
+
+            const dispo_subdispo = {
+                subdispo: {
+                    'sd_1': { name: 'subdispo 1', dispo: ['d_1', 'd_2'] },
+                    'sd_2': { name: 'subdispo 2', dispo: ['d_5', 'd_4'] },
+                    'sd_3': { name: 'subdispo 3', dispo: ['d_3', 'd_5'] },
+                    'sd_4': { name: 'subdispo 4', dispo: ['d_4'] },
+                    'sd_5': { name: 'subdispo 5', dispo: ['d_5', 'd_3'] }
+                }
+            };
+
+            const subdispo_subsubdispo = {
+                subsubdispo: {
+                    'ssd_1': { name: 'subsubdispo 1', subdispo: ['sd_1', 'sd_2'] },
+                    'ssd_2': { name: 'subsubdispo 2', subdispo: ['sd_5', 'sd_4'] },
+                    'ssd_3': { name: 'subsubdispo 3', subdispo: ['sd_3', 'sd_5'] },
+                    'ssd_4': { name: 'subsubdispo 4', subdispo: ['sd_4'] },
+                    'ssd_5': { name: 'subsubdispo 5', subdispo: ['sd_5', 'sd_3'] }
+                }
+            };
+
+            const filter_settings = {
+                'Searchable': true,
+                'SelectAll': true,
+                'SelectAllImg': 'icons8-select-all.svg',
+                'DeselectAll': true,
+                'DeselectAllImg': 'icons8-check-all (1).svg',
+                'ClearAll': true,
+                'ClearAllImg': 'funnel.png',
+                'DropDownIcon': true,
+                'DropDownIconImg': 'clear-funnel.svg',
+                'Counting': true,
+                'FontSize': 14,
+                'IconSize': 13,
+                'DropDownSize': 275,
+                'SelectFeature': 'multi'
+            }
+
+            const list_settings = {
+                'Searchable': true,
+                'SelectAll': true,
+                'SelectAllImg': 'icons8-select-all.svg',
+                'DeselectAll': true,
+                'DeselectAllImg': 'icons8-check-all (1).svg',
+                'ClearAll': true,
+                'ClearAllImg': 'funnel.png',
+                'DropDownIcon': true,
+                'DropDownIconImg': 'clear-funnel.svg',
+                'Counting': true,
+                'FontSize': 14,
+                'IconSize': 13,
+                'DropDownSize': 275
+            }
+
+        const dropdownDependency = {
+            'process_agent': process_agent,
+            'process_list': process_list,
+            'process_dispo': process_dispo,
+            'dispo_subdispo': dispo_subdispo,
+            'subdispo_subsubdispo': subdispo_subsubdispo,
+            'filter_settings': filter_settings,
+            'list_settings': list_settings
+        }  
+
+        const selectedagent = [];
+        const selectedprocess = [];
+        
+
+        $(document).ready(function() {
+            $("#process").CustomDropDown({ dropdownData: process,selectedItem:selectedprocess,dependency: ["process_agent","process_list","process_dispo"],settings: filter_settings,depsettings: "filter_settings"});
+            $("#agent").CustomDropDown({ dropdownData: process_agent,selectedItem: selectedagent,settings: filter_settings,depsettings: "filter_settings"});
+            $("#list").CustomDropDown({ dropdownData: process_list,settings: filter_settings,depsettings: "filter_settings"});
+            $("#dispo").CustomDropDown({ dropdownData: process_dispo,settings: filter_settings,dependency: ["dispo_subdispo"],depsettings: "filter_settings"});
+            $("#subdispo").CustomDropDown({ dropdownData: dispo_subdispo,settings: filter_settings,dependency: ["subdispo_subsubdispo"],depsettings: "filter_settings"});
+            $("#subsubdispo").CustomDropDown({ dropdownData: subdispo_subsubdispo,settings: filter_settings,depsettings: "filter_settings"});
+        });
+        
+   
+    </script>
+    <!-- <script defer src="https://cdn.jsdelivr.net/gh/himanshu12kumar/ajax-multiselect-drop-down-filter@vv1.0.0/drop-downmanager.min.js"></script> -->
+    <script defer src="script.js"></script>
+</body>
+</html>

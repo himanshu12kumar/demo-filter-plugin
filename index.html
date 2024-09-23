@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Multi-Select Dropdown</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/himanshu12kumar/ajax-multiselect-drop-down-filter@vv1.0.4/drop-downmanager.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body style="display: flex; align-item: center; justify-content: center;">
+
+    <div style="width: 300px;">
+        <div id="demo">
+            <!-- Dropdowns will be dynamically inserted here -->
+        </div>
+    </div>
+    
+</body>
+</html>
+
+<script defer src="https://cdn.jsdelivr.net/gh/himanshu12kumar/ajax-multiselect-drop-down-filter@vv1.0.4/drop-downmanager.min.js"></script>
+
+    <script>
+        // Usage example
+       
+        const demo_data= {
+                demo: {
+                    '101': { name: 'Process 1'},       
+                    '102': { name: 'Process 2'},
+                    '103': { name: 'Process 3'},
+                    '104': { name: 'Process 4'},
+                    '105': { name: 'Process 5'}
+                }
+            };
+
+            const filter_settings = {
+                'Searchable': true,
+                'SelectAll': true,
+                'SelectAllImg': 'select-all.svg',
+                'DeselectAll': true,
+                'DeselectAllImg': 'deseleck-all.svg',
+                'ClearAll': true,
+                'ClearAllImg': 'clear-all.png',
+                'DropDownIcon': true,
+                'DropDownIconImg': 'drop-down.svg',
+                'Counting': true,
+                'FontSize': 14,
+                'IconSize': 13,
+                'DropDownSize': 275,
+                'SelectFeature': 'multi'
+            } 
+
+        $(document).ready(function() {
+            $("#demo").CustomDropDown({ dropdownData: demo_data,settings: filter_settings});
+        });
+        
+   
+    </script>
