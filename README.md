@@ -3,7 +3,18 @@
 For creating the simple filter UI with drop down data.
 --------------------------------------------------------------------
 A jQuery-based plugin for creating dynamic filter UIs with multi-select or single-select dropdown functionality.
+
 This plugin offers customization options such as searchability, select/deselect all options, clear all, and more, making it perfect for advanced filtering needs.
+
+In this plugin you have feasibility to set your own icons for select/deselect all,clear all,drop down.
+
+This plugin provide you a better dependency functionality among two or more multi/single select drop down filter. By using this plugin you can easily achieve the fast and smooth dependency functionality with reducing the database load also. Bcz in this plugin you can store all filter data at a time after that this plugin handle dependency automatically. It will display child dependent option according to selected parent option.
+
+For making the dependency functionality among two or more drop down filter, This plugin reduce the backend server side dependency or load for making the ajax request and hitting the database again and again to fetch the dependent data.
+
+If your appliaction is form submit based then after refreshing the page, This plugin provide you the feasibility to set the privious selected option.
+
+This plugin provide the feasibility to users to convert the drop down filter in single or multi select.
 
 > Prerequisites
 
