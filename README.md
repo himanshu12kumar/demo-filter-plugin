@@ -12,7 +12,7 @@ This plugin provide you a better dependency functionality among two or more mult
 
 For making the dependency functionality among two or more drop down filter, This plugin reduce the backend server side dependency or load for making the ajax request and hitting the database again and again to fetch the dependent data.
 
-If your appliaction is form submit based then after refreshing the page, This plugin provide you the feasibility to set the privious selected option.
+If your appliaction is form submit based then after refreshing the page, This plugin provide you the feasibility to set the previous selected option.
 
 This plugin provide the feasibility to users to convert the drop down filter in single or multi select.
 
@@ -122,4 +122,16 @@ This plugin provide the feasibility to users to convert the drop down filter in 
 =======> You can see the demo here
 https://himanshu12kumar.github.io/demo-filter-plugin/
 
+> Pass selected option
+ => After refreshing the page if you want to display previous selected option, you need to pass the list of selected values
+
+	const selectedprocess = ['101','102'];
+ 
+	$(document).ready(function() {
+              $("#demo").CustomDropDown({
+                dropdownData: demo_data,
+		selectedItem: selectedprocess,
+                settings: filter_settings
+              });
+            });
  
