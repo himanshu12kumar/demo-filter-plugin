@@ -38,7 +38,8 @@ This plugin provide the feasibility to users to convert the drop down filter in 
 1) Create a placeholder element in HTML where the dropdown UI will be rendered
    
 ------------------------------
-	<div id="demo"></div>
+	<div id="first"></div>         // Be sure id's name should be plain text only, don't use underscore _ hyphen - etc
+ 	<div id="second"></div>
 ------------------------------
 
 2) Define your data and settings
@@ -52,13 +53,23 @@ This plugin provide the feasibility to users to convert the drop down filter in 
 => demo object name will be the visuals text in UI
 
 ------------------------------------------------------------------
-	const demo_data= {
-                demo: {    
+	const first_data= {
+                first: {    
                     '101': { name: 'Process 1'},   
                     '102': { name: 'Process 2'},    
                     '103': { name: 'Process 3'},
                     '104': { name: 'Process 4'},
                     '105': { name: 'Process 5'}
+                }
+            };
+
+     	  const second_data= {
+                second: {    
+                    's_101': { name: 'second 1',first: ['101','104']},   
+                    's_102': { name: 'second 2',first: ['105','103','102']},    
+                    's_103': { name: 'second 3',first: ['104','103']},
+                    's_104': { name: 'second 4',first: ['105']},
+                    's_105': { name: 'second 5',first: []}
                 }
             };
             
@@ -89,11 +100,18 @@ This plugin provide the feasibility to users to convert the drop down filter in 
   => settings will store the filter setting object name
   
           	$(document).ready(function() {
-              $("#demo").CustomDropDown({
-                dropdownData: demo_data,
-                settings: filter_settings
-              });
-            });
+	   
+	              $("#first").CustomDropDown({
+	                dropdownData: first_data,
+	                settings: filter_settings
+	              });
+
+		       $("#second").CustomDropDown({
+	                dropdownData: second_data,
+	                settings: filter_settings
+	              });
+	      
+            	});
     
 > Available Features
 
@@ -134,4 +152,89 @@ https://himanshu12kumar.github.io/demo-filter-plugin/
                 settings: filter_settings
               });
             });
+> Convert drop down into multi/single select
+
+	'SelectFeature': 'multi'       // you need to pass this in settings object for multi select drop down
+ 	'SelectFeature': 'single'      // for single select drop down
+
+> Dependency settings
+
+ => You need to maintain a dependency object with key-value pair
+
+ 	const dropdownDependency = {
+            'first_second': second_data,
+            'filter_settings': filter_settings     // If there is no dependency among 2 or more filter then you no need to provide this setting option here
+        }                                      // If there is any dependency among 2 or more filter, you have to provide it at any cost
+
+ => Here how you can define dependency object
+
+ Object name you must keep 'dropdownDependency' only you can't change
+
+ Keys name will be defined like that if you have 2 drop down filter 'first' and 'second' , and second is depends on first
+
+ keys name will be 'first_second' for second flter and value for 'first_second' will be data object created for second filter.
+
+ => Here how you can define data object for second filter
  
+	const second_data= {
+		second: {    
+		    's_101': { name: 'second 1',first: ['101','104']},   // it's means 's_101' belongs to '101' and '102'
+		    's_102': { name: 'second 2',first: ['105','103','102']},    
+		    's_103': { name: 'second 3',first: ['104','103']},
+		    's_104': { name: 'second 4',first: ['105']},
+		    's_105': { name: 'second 5',first: []}      // it's means 's_105' didn't belongs to any first option
+		}
+	    };
+
+> Use case of 3 filter
+
+ => If you have 3 filter 'first', 'second', 'third' and if 'second' depends on 'first' and 'third' depends on both 'second' and 'first'
+
+ => How you can define dependency object with key-value
+ 
+	const dropdownDependency = {
+            'first_second': second_data,            // key name for 'second' filter will be 'first_second'
+	    'first_second_third': third_data        // key name for 'third' filter will be 'first_second_third'
+            'filter_settings': filter_settings
+        } 
+
+ => If 'third' filter is depends only on 'second' then.
+
+ 	const dropdownDependency = {
+            'first_second': second_data,            // key name for 'second' filter will be 'first_second'
+	    'second_third': third_data        // key name for 'third' filter will be 'second_third'
+            'filter_settings': filter_settings
+        }
+
+ => How you can define data object for 'third' filter if 'third' filter depends on both 'first' and 'second'.
+
+ 	const third_data= {
+		third: {    
+		    't_101': { name: 'third 1',first: ['101','104'],second: ['s_101']}, 
+		    't_102': { name: 'third 2',first: ['105','103','102'],second: ['s_103']},    
+		    't_103': { name: 'third 3',first: ['104','103'],second: ['s_103','s_105']},
+		    't_104': { name: 'third 4',first: ['105'],second: ['s_104','s_102']},
+		    't_105': { name: 'third 5',first: [],second: ['s_105']} 
+		}
+	    };
+
+=> Now how you can initialize the drop down in dependency case
+
+	$(document).ready(function() {
+	   
+	      $("#first").CustomDropDown({
+		dropdownData: first_data,
+		dependency: ['first_second','first_second_third'], //It's means first belongs to 'second' and 'third' filter so pass key name for 'second' and 'third' filter
+		depsettings: 'filter_settings'  // If dependency is there among filter so you need to pass this params also
+		settings: filter_settings
+	      });
+
+	       $("#second").CustomDropDown({
+		dropdownData: second_data,
+  		dependency: ['first_second_third'],
+    		depsettings: 'filter_settings'
+		settings: filter_settings
+	       });
+	      
+        });
+     
